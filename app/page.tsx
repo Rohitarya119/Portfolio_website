@@ -224,7 +224,7 @@ const itemVariants = {
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('about');
+  const [activeSection, setActiveSection] = useState('home');
   const [scrollProgress, setScrollProgress] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -285,6 +285,12 @@ export default function Home() {
   };
 
   useEffect(() => {
+    // Reset scroll restoration to manual and scroll to top on refresh
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const timer = setInterval(() => {
       setLoadingProgress((prev) => {
         if (prev >= 100) {
@@ -306,7 +312,7 @@ export default function Home() {
         setScrollProgress((window.scrollY / totalScroll) * 100);
       }
 
-      const sections = ['about', 'services', 'projects', 'skills', 'achievements', 'contact'];
+      const sections = ['home', 'about', 'services', 'projects', 'skills', 'achievements', 'contact'];
       const current = sections.find((section) => {
         const el = document.getElementById(section);
         if (el) {
@@ -456,7 +462,7 @@ export default function Home() {
             <a 
               href="#" 
               className={`text-xs font-semibold transition-colors nav-link-underline ${
-                activeSection === 'about' ? 'text-primary nav-link-active' : 'text-muted-foreground hover:text-foreground'
+                activeSection === 'home' ? 'text-primary nav-link-active' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               Home
@@ -550,7 +556,7 @@ export default function Home() {
               <a 
                 href="#" 
                 onClick={() => setMobileMenuOpen(false)}
-                className={`text-sm font-semibold transition-colors ${activeSection === 'about' ? 'text-primary' : 'text-muted-foreground'}`}
+                className={`text-sm font-semibold transition-colors ${activeSection === 'home' ? 'text-primary' : 'text-muted-foreground'}`}
               >
                 Home
               </a>
@@ -594,7 +600,7 @@ export default function Home() {
           </div>
         )}
       </motion.nav>      {/* Hero Section */}
-      <section className="relative pt-36 pb-20 px-6 z-10">
+      <section id="home" className="relative pt-36 pb-20 px-6 z-10">
         <div className="max-w-[1300px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column - Hero Content */}
