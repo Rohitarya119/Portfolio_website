@@ -16,6 +16,7 @@ export default function TerminalConsole() {
   const [isMinimized, setIsMinimized] = useState(false);
   const terminalEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
     // Welcome message
@@ -36,7 +37,11 @@ export default function TerminalConsole() {
   useEffect(() => {
     if (!isMinimized) {
       scrollToBottom();
-      inputRef.current?.focus();
+      if (isMountedRef.current) {
+        inputRef.current?.focus();
+      } else {
+        isMountedRef.current = true;
+      }
     }
   }, [history, isMinimized]);
 
